@@ -52,13 +52,25 @@
         <div class="mt-8 flex h-[20%] w-[50%] border border-white rounded-[26px] overflow-hidden flex-col">
             <div class="flex-1 items-center px-4 flex h-1/2 bg-[#404045] text-white outline-none rounded-[26px] border border-white">
                 <input id="message" type="text" class="h-full w-full p-4 rounded-[26px] outline-none">
-                <button id="send">
+                <button id="send" class="cursor-pointer">
                     <img src="{{ asset('icons/Exclude.png') }}" alt="" class="w-[34px] h-[34px]">
                 </button>
             </div>
            <div class="flex justify-end p-4">
-             <button id="sourcesButton" class="bg-[#404045] rounded-full px-10 py-2 border font-semibold text-white border-white">Sources</button>
-           </div>
+    <div class="relative group">
+        <button id="sourcesButton" 
+            class="bg-[#404045] rounded-full px-10 py-2 border font-semibold text-white border-white hover:glow hover:cursor-pointer">
+            Sources
+        </button>
+
+        <!-- Tooltip -->
+        <div class="absolute right-0 -top-10 bg-gray-800 text-white text-sm px-2 py-1 rounded-md 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+            View sources
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 

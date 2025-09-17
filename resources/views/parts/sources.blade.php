@@ -5,8 +5,13 @@
         </h2>
     </div>
     <div class="flex justify-center">
-        <button id="closeSources" class="bg-[#404045] rounded-full px-4 py-1 border font-semibold text-white border-white">
+        <button id="closeSources" class="bg-[#404045] rounded-full px-4 py-1 border font-semibold text-white border-white hover:glow hover:cursor-pointer">
             <img src="{{ asset('icons/material-symbols_close-rounded.png') }}" alt="" class="w-[15px] h-[15px]">
         </button>
+        <style>
+            .glow {
+                box-shadow: 0 0 10px #404045;
+            }
+        </style>
     </div>
 </div>
