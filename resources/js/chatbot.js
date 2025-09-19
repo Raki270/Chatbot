@@ -31,28 +31,49 @@ newChat.addEventListener("click", function () {
     }, 500); // Match the fade-out duration
 });
 
-
 // Function to append messages
 function appendMessage(text, sender) {
     let msgWrapper = document.createElement("div");
 
     if (sender === "user") {
+        // User message bubble
         msgWrapper.className = "flex justify-end";
         msgWrapper.innerHTML = `
-            <div class="bg-[#505B8D] text-white font-bold px-4 py-2 rounded-tl-full rounded-bl-full rounded-br-full rounded-tr-none max-w-[70%]">
+            <div class="bg-[#505B8D] text-white font-bold px-4 py-2 rounded-tl-full rounded-bl-full rounded-br-full
+                ${text.length > 100 ? 'rounded-br-full rounded-tr-none' : ''} 
+                max-w-[50%] break-words whitespace-pre-wrap">
                 ${text}
             </div>
         `;
+
     } else if (sender === "ai") {
+        // AI message bubble (empty at first for typing effect)
         msgWrapper.className = "flex justify-start";
         msgWrapper.innerHTML = `
             <img src="https://ik.imagekit.io/r3656r3r/Group77.png?updatedAt=1757435968221" 
                  alt="" class="w-6 h-6 mt-2 mr-2"/>
-            <div class="text-gray-300 leading-relaxed max-w-[80%] mt-2">
-                ${text}
-            </div>
+            <div id="aiMessage" class="text-gray-100 px-4 py-2 rounded-tr-full rounded-br-full 
+                max-w-[70%] break-words whitespace-pre-wrap font-medium mt-2"></div>
         `;
+
+        const aiMessageDiv = msgWrapper.querySelector("#aiMessage");
+
+        // Typing effect
+        let index = 0;
+        const typingSpeed = 20; // milliseconds per character
+        const typeEffect = () => {
+            if (index < text.length) {
+                aiMessageDiv.textContent += text.charAt(index);
+                index++;
+                response.scrollTop = response.scrollHeight; // Auto-scroll while typing
+                setTimeout(typeEffect, typingSpeed);
+            }
+        };
+
+        typeEffect();
+
     } else if (sender === "spinner") {
+        // Spinner while AI is "thinking"
         msgWrapper.className = "flex justify-start ai-spinner";
         msgWrapper.innerHTML = `
             <img src="https://ik.imagekit.io/r3656r3r/Group77.png?updatedAt=1757435968221" 
@@ -88,7 +109,7 @@ function sendText(message) {
     fetchAiResponse(message).then((aiResponse) => {
         // Remove spinner
         spinnerMessage.remove();
-        // Append AI response
+        // Append AI response with typing effect
         appendMessage(aiResponse, "ai");
     });
 }
@@ -124,28 +145,19 @@ input.addEventListener("keyup", function (event) {
     }
 });
 
-// Fetch AI response
+// Fetch AI response from backend
 async function fetchAiResponse(input) {
-    const response = await fetch(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer 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",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                model: "deepseek/deepseek-r1:free",
-                messages: [
-                    {
-                        role: "user",
-                        content: input,
-                    },
-                ],
-            }),
-        }
-    );
+    const response = await fetch("http://localhost:5000/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            prompt: input, // matches your FastAPI ChatRequest model
+        }),
+    });
 
     const data = await response.json();
-    return data.choices[0].message.content;
+    console.log(data);
+    return data.reply; // your API returns { "reply": "..." }
 }
