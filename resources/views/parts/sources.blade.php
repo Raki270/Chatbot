@@ -1,7 +1,7 @@
 <div id="sources" class="h-screen w-[15%] bg-[#292A2D] flex-col justify-between px-4 py-8 shadow-lg hidden">
     <div class="flex flex-col space-y-10 items-center">
         <h2 class="text-white text-2xl font-bold">
-            Sources
+            Извори
         </h2>
 
         <ul class="text-white text-sm list-disc list-inside">

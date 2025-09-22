@@ -36,16 +36,20 @@ function appendMessage(text, sender) {
     let msgWrapper = document.createElement("div");
 
     if (sender === "user") {
-        // User message bubble
         msgWrapper.className = "flex justify-end";
-        msgWrapper.innerHTML = `
-            <div class="bg-[#505B8D] text-white font-bold px-4 py-2 rounded-tl-full rounded-bl-full rounded-br-full
-                ${text.length > 100 ? 'rounded-br-full rounded-tr-none' : ''} 
-                max-w-[50%] break-words whitespace-pre-wrap">
-                ${text}
-            </div>
-        `;
 
+        // pick bubble shape depending on text length
+        const bubbleShape =
+            text.length > 100
+                ? "rounded-bl-2xl rounded-br-2xl rounded-tl-2xl" // for long text, softer corners
+                : "rounded-bl-full rounded-br-full rounded-tl-full"; // for short text, bubble-like
+
+        msgWrapper.innerHTML = `
+        <div class="bg-[#505B8D] text-white font-bold px-4 py-2 ${bubbleShape}
+            max-w-[70%] break-words leading-relaxed text-right">
+            ${text}
+        </div>
+    `;
     } else if (sender === "ai") {
         // AI message bubble (empty at first for typing effect)
         msgWrapper.className = "flex justify-start";
@@ -71,7 +75,6 @@ function appendMessage(text, sender) {
         };
 
         typeEffect();
-
     } else if (sender === "spinner") {
         // Spinner while AI is "thinking"
         msgWrapper.className = "flex justify-start ai-spinner";
@@ -80,7 +83,7 @@ function appendMessage(text, sender) {
                  alt="" class="w-6 h-6 mt-2 mr-2"/>
             <div class="mt-2 flex items-center">
                 <div class="w-5 h-5 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-                <span class="ml-2 text-gray-300">AI is thinking...</span>
+                <span class="ml-2 text-gray-300">Размислува...</span>
             </div>
         `;
     }

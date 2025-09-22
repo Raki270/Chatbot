@@ -22,11 +22,11 @@
     <!-- Content div -->
     <div class="flex-1 flex flex-col gap-10 items-center justify-center">
         <div id="greeting">
-            <h1 class="text-white text-center text-[64px] font-bold">Welcome back</h1>
-            <p class="text-white text-center text-[46px] font-semibold">How can I help?</p>
+            <h1 class="text-white text-center text-[64px] font-bold">Добредојдовте</h1>
+            <p class="text-white text-center text-[46px] font-semibold">Како можам да помогнам?</p>
         </div>
 
-        <div id="responses" class="px-2 w-[70%] h-[60vh] overflow-y-scroll hidden" style="overflow-y: auto; scrollbar-width: thin; scrollbar-color: #6e6e6e #404045;">
+        <div id="responses" class="px-2 w-[70%] h-[60vh] overflow-y-scroll hidden" style="overflow-y: auto; scrollbar-width: thin; scrollbar-color: #4B5CA8 #292A2D;">
             <style>
                 #responses::-webkit-scrollbar {
                     width: 8px;
@@ -60,7 +60,7 @@
                 <div class="relative group">
                     <button id="sourcesButton"
                         class="bg-[#404045] rounded-full px-10 py-2 border font-semibold text-white border-white hover:glow hover:cursor-pointer">
-                        Sources
+                        Извори
                     </button>
 
                     <!-- Tooltip -->
